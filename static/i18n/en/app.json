@@ -512,6 +512,25 @@
         "selectAccountDebit": "Account to debit",
         "recipientAddress": "Recipient address",
         "amount": "Amount",
+        "passcode": {
+          "title":"Passcode",
+          "optional":"optional",
+          "show":"Show",
+          "repeat":"Repeat passcode",
+          "placeholders":{
+            "left":"optional",
+            "right":{
+              "optional":"optional",
+              "empty":"repeat"
+            }
+          },
+          "check":{
+            "illegal":"Use only letters, numbers & symbols.",
+            "short": "Too short.",
+            "simple":"Too simple.",
+            "empty": "Repeat passcode.",
+            "match": "Passcodes don't match."
+        }},
         "fees": "Network fees",
         "useMax": "Max",
         "advancedOptions": "Advanced options",

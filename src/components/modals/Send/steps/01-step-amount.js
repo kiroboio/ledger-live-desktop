@@ -25,6 +25,7 @@ import FeeField from 'families/FeeField'
 import AdvancedOptionsField from 'families/AdvancedOptionsField'
 import RecipientField from '../fields/RecipientField'
 import AmountField from '../fields/AmountField'
+import PasscodeField from '../fields/PasscodeField'
 import HighFeeConfirmation from '../HighFeeConfirmation'
 import ErrorBanner from '../../../ErrorBanner'
 import type { StepProps } from '../types'
@@ -67,6 +68,16 @@ const AccountFields = ({
         parentAccount={parentAccount}
         transaction={transaction}
         onChangeTransaction={onChangeTransaction}
+        t={t}
+      />
+
+      {/* Kirobo passcode */}
+      <PasscodeField
+        // status={status}
+        // account={account}
+        // parentAccount={parentAccount}
+        // transaction={transaction}
+        // onChangeTransaction={onChangeTransaction}
         t={t}
       />
 

@@ -56,4 +56,7 @@ export const urls = {
 
   // Currencies status
   currenciesStatus: 'http://resources.live.ledger.app/public_resources/currencies.json',
+
+  // Kirobo
+  kirobo: { homepage: 'https://kirobo.io/', passcode: 'https://kirobo.io/' },
 }

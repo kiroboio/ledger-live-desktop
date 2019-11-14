@@ -14,3 +14,7 @@ xliffs/
 
 .yalc
 yalc.lock
+
+# settings and system files
+.DS_Store
+.vscode
