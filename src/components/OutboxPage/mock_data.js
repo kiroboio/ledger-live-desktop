@@ -1,0 +1,310 @@
+import { BigNumber } from 'bignumber.js'
+
+export const mockOutbox = [
+  {
+    accountId:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit',
+    blockHash: null,
+    blockHeight: 1608807,
+    date: new Date('Sun Nov 18 2019 14:37:47 GMT+0200 (IST)'),
+    extra: {},
+    fee: new BigNumber(0.0012),
+    hash: '92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1',
+    id:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit-92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1-OUT',
+    recipients: ['2N8Tf6ABHa7YVScQg6f6oZHoX1MGUs58kyU'],
+    senders: ['2Mvx1TDfCoem5ti5TFLFBXgnKV8FeJNwHHJ', '2MsbiY7vpLMJa7nJpf5tP3qzrEUBdYfX9Yi'],
+    type: 'OUT',
+    value: new BigNumber(0.01234),
+    status: 'pending',
+  },
+  {
+    accountId:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ftQJDn49zsT6NPrQt163pGvyCBbUFMEteNoXGU4wpLneyaAEmsbEAweRbG8bzWCqQQGs1PRarE23rchCyoXGdZ3j2VQp4Hz:segwit',
+    blockHash: null,
+    blockHeight: 1608807,
+    date: new Date('Sun Nov 17 2019 14:34:50 GMT+0200 (IST)'),
+    extra: {},
+    fee: new BigNumber(0.0012),
+
+    hash: '6c31ec7b8037a9a316938040311e46c91af9b8d97db670f8a78e35558bee4273',
+    id:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ftQJDn49zsT6NPrQt163pGvyCBbUFMEteNoXGU4wpLneyaAEmsbEAweRbG8bzWCqQQGs1PRarE23rchCyoXGdZ3j2VQp4Hz:segwit-6c31ec7b8037a9a316938040311e46c91af9b8d97db670f8a78e35558bee4273-OUT',
+    recipients: ['2MsbiY7vpLMJa7nJpf5tP3qzrEUBdYfX9Yi'],
+    senders: [
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2Mx3ebZerJKoYco9hQwsabdh8wvKRsRUwAA',
+    ],
+    type: 'OUT',
+    value: new BigNumber(0.0345),
+    status: 'error',
+  },
+  {
+    accountId:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit',
+    blockHash: null,
+    blockHeight: 1608807,
+    date: new Date('Sun Nov 17 2019 14:37:47 GMT+0200 (IST)'),
+    extra: {},
+    fee: new BigNumber(0.0012),
+    hash: '92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1',
+    id:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit-92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1-OUT',
+    recipients: ['2N8Tf6ABHa7YVScQg6f6oZHoX1MGUs58kyU'],
+    senders: ['2Mvx1TDfCoem5ti5TFLFBXgnKV8FeJNwHHJ', '2MsbiY7vpLMJa7nJpf5tP3qzrEUBdYfX9Yi'],
+    type: 'OUT',
+    value: new BigNumber(0.0012345),
+    status: 'pending',
+  },
+  {
+    accountId:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ftQJDn49zsT6NPrQt163pGvyCBbUFMEteNoXGU4wpLneyaAEmsbEAweRbG8bzWCqQQGs1PRarE23rchCyoXGdZ3j2VQp4Hz:segwit',
+    blockHash: null,
+    blockHeight: 1608807,
+    date: new Date('Sun Nov 17 2019 14:34:50 GMT+0200 (IST)'),
+    extra: {},
+    fee: new BigNumber(0.0012),
+
+    hash: '6c31ec7b8037a9a316938040311e46c91af9b8d97db670f8a78e35558bee4273',
+    id:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ftQJDn49zsT6NPrQt163pGvyCBbUFMEteNoXGU4wpLneyaAEmsbEAweRbG8bzWCqQQGs1PRarE23rchCyoXGdZ3j2VQp4Hz:segwit-6c31ec7b8037a9a316938040311e46c91af9b8d97db670f8a78e35558bee4273-OUT',
+    recipients: ['2MsbiY7vpLMJa7nJpf5tP3qzrEUBdYfX9Yi'],
+    senders: [
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2Mx3ebZerJKoYco9hQwsabdh8wvKRsRUwAA',
+    ],
+    type: 'OUT',
+    value: new BigNumber(0.0345),
+    status: 'pending',
+  },
+  {
+    accountId:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit',
+    blockHash: null,
+    blockHeight: 1608807,
+    date: new Date('Sun Nov 17 2019 14:37:47 GMT+0200 (IST)'),
+    extra: {},
+    fee: new BigNumber(0.0012),
+    hash: '92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1',
+    id:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit-92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1-OUT',
+    recipients: ['2N8Tf6ABHa7YVScQg6f6oZHoX1MGUs58kyU'],
+    senders: ['2Mvx1TDfCoem5ti5TFLFBXgnKV8FeJNwHHJ', '2MsbiY7vpLMJa7nJpf5tP3qzrEUBdYfX9Yi'],
+    type: 'OUT',
+    value: new BigNumber(0.0012345),
+    status: 'pending',
+  },
+  {
+    accountId:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ftQJDn49zsT6NPrQt163pGvyCBbUFMEteNoXGU4wpLneyaAEmsbEAweRbG8bzWCqQQGs1PRarE23rchCyoXGdZ3j2VQp4Hz:segwit',
+    blockHash: null,
+    blockHeight: 1608807,
+    date: new Date('Sun Nov 17 2019 14:34:50 GMT+0200 (IST)'),
+    extra: {},
+    fee: new BigNumber(0.0012),
+
+    hash: '6c31ec7b8037a9a316938040311e46c91af9b8d97db670f8a78e35558bee4273',
+    id:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ftQJDn49zsT6NPrQt163pGvyCBbUFMEteNoXGU4wpLneyaAEmsbEAweRbG8bzWCqQQGs1PRarE23rchCyoXGdZ3j2VQp4Hz:segwit-6c31ec7b8037a9a316938040311e46c91af9b8d97db670f8a78e35558bee4273-OUT',
+    recipients: ['2MsbiY7vpLMJa7nJpf5tP3qzrEUBdYfX9Yi'],
+    senders: [
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2Mx3ebZerJKoYco9hQwsabdh8wvKRsRUwAA',
+    ],
+    type: 'OUT',
+    value: new BigNumber(0.0345),
+    status: 'pending',
+  },
+  {
+    accountId:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit',
+    blockHash: null,
+    blockHeight: 1608807,
+    date: new Date('Sun Nov 17 2019 14:37:47 GMT+0200 (IST)'),
+    extra: {},
+    fee: new BigNumber(0.0012),
+    hash: '92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1',
+    id:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit-92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1-OUT',
+    recipients: ['2N8Tf6ABHa7YVScQg6f6oZHoX1MGUs58kyU'],
+    senders: ['2Mvx1TDfCoem5ti5TFLFBXgnKV8FeJNwHHJ', '2MsbiY7vpLMJa7nJpf5tP3qzrEUBdYfX9Yi'],
+    type: 'OUT',
+    value: new BigNumber(0.0012345),
+    status: 'pending',
+  },
+  {
+    accountId:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ftQJDn49zsT6NPrQt163pGvyCBbUFMEteNoXGU4wpLneyaAEmsbEAweRbG8bzWCqQQGs1PRarE23rchCyoXGdZ3j2VQp4Hz:segwit',
+    blockHash: null,
+    blockHeight: 1608807,
+    date: new Date('Sun Nov 17 2019 14:34:50 GMT+0200 (IST)'),
+    extra: {},
+    fee: new BigNumber(0.0012),
+
+    hash: '6c31ec7b8037a9a316938040311e46c91af9b8d97db670f8a78e35558bee4273',
+    id:
+      'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ftQJDn49zsT6NPrQt163pGvyCBbUFMEteNoXGU4wpLneyaAEmsbEAweRbG8bzWCqQQGs1PRarE23rchCyoXGdZ3j2VQp4Hz:segwit-6c31ec7b8037a9a316938040311e46c91af9b8d97db670f8a78e35558bee4273-OUT',
+    recipients: ['2MsbiY7vpLMJa7nJpf5tP3qzrEUBdYfX9Yi'],
+    senders: [
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2MsSzJz8QRMMLqoxELorgcRdG94TWdZjJJR',
+      '2Mx3ebZerJKoYco9hQwsabdh8wvKRsRUwAA',
+    ],
+    type: 'OUT',
+    value: new BigNumber(0.0345),
+    status: 'pending',
+  },
+]
+
+// export const mockOutbox = [
+//   {
+//     id: '0001',
+//     status: 'pending',
+//     date: '2019-11-17T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 1' },
+//     amount: BigNumber(1234),
+//   },
+//   {
+//     id: '0002',
+//     status: 'error',
+//     date: '2019-11-17T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0003',
+//     status: 'pending',
+//     date: '2019-11-18T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0004',
+//     status: 'pending',
+//     date: '2019-11-16T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0005',
+//     status: 'pending',
+//     date: '2019-11-16T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0006',
+//     status: 'pending',
+//     date: '2019-11-14T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0007',
+//     status: 'pending',
+//     date: '2019-11-14T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0008',
+//     status: 'pending',
+//     date: '2019-11-18T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0009',
+//     status: 'pending',
+//     date: '2019-11-14T10:03:31.867Z',
+//     unit: {
+//       name: 'pending',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0010',
+//     status: 'error',
+//     date: '2019-11-14T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+//   {
+//     id: '0011',
+//     status: 'pending',
+//     date: '2019-11-14T10:03:31.867Z',
+//     unit: {
+//       name: 'bitcoin',
+//       code: 'BTC',
+//       magnitude: 5,
+//       showAllDigits: true,
+//     },
+//     account: { id: '1', name: 'Bitcoin Testnet 2' },
+//     amount: BigNumber(2345),
+//   },
+// ]

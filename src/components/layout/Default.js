@@ -21,6 +21,7 @@ import AccountPage from 'components/AccountPage'
 import DashboardPage from 'components/DashboardPage'
 import ManagerPage from 'components/ManagerPage'
 import AccountsPage from 'components/AccountsPage'
+import OutboxPage from 'components/OutboxPage'
 import PartnersPage from 'components/PartnersPage'
 import SettingsPage from 'components/SettingsPage'
 import AssetPage from 'components/AssetPage'
@@ -135,6 +136,7 @@ class Default extends Component<Props> {
                     <Route path="/" exact component={DashboardPage} />
                     <Route path="/settings" component={SettingsPage} />
                     <Route path="/accounts" component={AccountsPage} />
+                    <Route path="/outbox" component={OutboxPage} />
                     <Route path="/manager" component={ManagerPage} />
                     <Route path="/partners" component={PartnersPage} />
                     <Route path="/account/:parentId/:id" component={AccountPage} />

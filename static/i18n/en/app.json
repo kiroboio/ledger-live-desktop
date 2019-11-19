@@ -566,6 +566,19 @@
       }
     }
   },
+  "outbox":{"title":"Outbox",
+    "send":"New Safe Transfer",
+    "noResultFound": "No transfers found",
+    "noMoreTransfers": "No more transfers",
+    "statuses":{
+      "pending":"Pending",
+      "error":"Error"
+    }
+  },
+  "safeTransferDetails": {
+    "cancel": "Cancel",
+    "viewTransfer": "View in explorer"
+  },
   "releaseNotes": {
     "title": "Release notes",
     "version": "Ledger Live {{versionNb}}"

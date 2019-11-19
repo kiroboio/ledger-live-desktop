@@ -73,11 +73,6 @@ const AccountFields = ({
 
       {/* Kirobo passcode */}
       <PasscodeField
-        // status={status}
-        // account={account}
-        // parentAccount={parentAccount}
-        // transaction={transaction}
-        // onChangeTransaction={onChangeTransaction}
         t={t}
       />
 

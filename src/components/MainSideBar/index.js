@@ -27,6 +27,7 @@ import IconWallet from 'icons/Wallet'
 import IconPortfolio from 'icons/Portfolio'
 import IconReceive from 'icons/Receive'
 import IconSend from 'icons/Send'
+import IconOutbox from 'icons/Outbox'
 import IconExchange from 'icons/Exchange'
 import IconChevron from 'icons/ChevronRight'
 import TopGradient from './TopGradient'
@@ -252,6 +253,7 @@ class MainSideBar extends PureComponent<Props> {
   }
   handleClickManager = () => this.push('/manager')
   handleClickAccounts = () => this.push('/accounts')
+  handleClickOutbox = () => this.push('/outbox')
   handleClickExchange = () => this.push('/partners')
   handleClickDev = () => this.push('/dev')
   maybeRedirectToAccounts = () => {
@@ -305,6 +307,16 @@ class MainSideBar extends PureComponent<Props> {
                   icon={IconSend}
                   iconActiveColor="wallet"
                   onClick={this.handleOpenSendModal}
+                  disabled={noAccounts}
+                  collapsed={secondAnim}
+                />
+                {/* Kirobo Outbox */}
+                <SideBarListItem
+                  label={t('outbox.title')}
+                  icon={IconOutbox}
+                  isActive={pathname === '/outbox'}
+                  iconActiveColor="wallet"
+                  onClick={this.handleClickOutbox}
                   disabled={noAccounts}
                   collapsed={secondAnim}
                 />
