@@ -1,19 +1,18 @@
 // @flow
 
 import React from 'react'
-import type { Account } from '@ledgerhq/live-common/lib/types'
+import type { AccountLike, Operation } from '@ledgerhq/live-common/lib/types'
 
 import Box, { Card } from 'components/base/Box'
 import SectionTitle from './SectionTitle'
 import Row from '../Row'
 
-import type { Transfer } from '../TransfersList.types'
 import { makeAccount } from '../tools'
 
 type SectionProps = {
   date: Date,
-  accounts: Account[],
-  transfers: Transfer[],
+  accounts: AccountLike[],
+  transfers: Operation[],
   onClick: string => void,
 }
 

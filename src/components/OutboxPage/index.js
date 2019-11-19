@@ -1,11 +1,11 @@
 // @flow
-
+// Kirobo Outbox page component
 import React from 'react'
 import TrackPage from 'analytics/TrackPage'
 import Box from 'components/base/Box'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import type { Account } from '@ledgerhq/live-common/lib/types'
+import type { AccountLike, Operation } from '@ledgerhq/live-common/lib/types'
 
 import { accountsSelector } from 'reducers/accounts'
 import { openModal } from 'reducers/modals'
@@ -15,21 +15,18 @@ import { TopBannerContainer } from '../DashboardPage'
 import MigrationBanner from '../modals/MigrateAccounts/Banner'
 
 import OutboxHeader from './OutboxHeader'
-import TransfersList from './TransfersList'
+import Transactions from './Transactions'
 import { mockOutbox } from './mock_data'
-import type { Transfer } from './TransfersList/TransfersList.types'
 
 type OutboxPageProps = {
   outbox: [],
-  accounts: Account[],
+  accounts: AccountLike[],
   openModal: (string, Object) => *,
 }
 
 const AccountsPage = ({ outbox, accounts, openModal }: OutboxPageProps) => {
   const handleTransferClick = (transferId: string) => {
     const transfer = outbox.filter(transfer => transfer.id === transferId)[0]
-    console.log(transfer)
-    console.log(transferId)
     openModal(MODAL_SAFE_TRANSFER_DETAILS, { transfer })
   }
 
@@ -43,7 +40,7 @@ const AccountsPage = ({ outbox, accounts, openModal }: OutboxPageProps) => {
         <MigrationBanner />
       </TopBannerContainer>
       <OutboxHeader />
-      <TransfersList accounts={accounts} onClick={handleTransferClick} transfers={outbox} />
+      <Transactions accounts={accounts} onClick={handleTransferClick} transfers={outbox} />
     </>
   )
 
@@ -52,7 +49,7 @@ const AccountsPage = ({ outbox, accounts, openModal }: OutboxPageProps) => {
 
 // TODO: Remove below mock data
 const outboxMock = () => {
-  const data: Transfer[] = mockOutbox
+  const data: Operation[] = mockOutbox
   return data
 }
 

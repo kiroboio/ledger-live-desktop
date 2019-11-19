@@ -8,7 +8,7 @@ export const mockOutbox = [
     blockHeight: 1608807,
     date: new Date('Sun Nov 18 2019 14:37:47 GMT+0200 (IST)'),
     extra: {},
-    fee: new BigNumber(0.0012),
+    fee: new BigNumber(0.12),
     hash: '92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1',
     id:
       'libcore:1:bitcoin_testnet:tpubDCHgppDKNLN8ck3VY6sghchaz7EyRWvixiuRXjzgNpnfRxviYFDKtHh5osr3e1y9R3xyuv8F25ssRQRSQdM3vcUdeS1airWDp7MP8nDdinJ:segwit-92511c827d6cfbf9d0486e5d0464407933c1689b8be6664c3b721f23875cd7a1-OUT',
