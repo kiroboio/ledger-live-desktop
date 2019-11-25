@@ -1914,10 +1914,9 @@
     bindings "1.3.0"
     nan "^2.6.2"
 
-"@ledgerhq/live-common@^8.4.0":
+"@ledgerhq/live-common@git://github.com/kiroboio/ledger-live-common#safe-transfer-dev":
   version "8.8.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/live-common/-/live-common-8.8.0.tgz#5007c419efe290bc4d71fb2bc5e0b3423de3c5e2"
-  integrity sha512-GAl9l1XyesrhdSnyIcxVsk9ubFH1sSW3RtSH41v299bhHzeKzBUWx1bvMHhL5/UJsOU7DZiD+MocBgOvAkpg/A==
+  resolved "git://github.com/kiroboio/ledger-live-common#68954f90822084c2c85174089b64acce15eab6d6"
   dependencies:
     "@ledgerhq/compressjs" "1.3.2"
     "@ledgerhq/devices" "4"
