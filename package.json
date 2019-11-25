@@ -7,7 +7,7 @@
   "author": "Ledger",
   "license": "MIT",
   "scripts": {
-    "postinstall": "bash ./scripts/postinstall.sh",
+    "postinstall": "bash ./scripts/postinstall.sh; cd node_modules/@ledgerhq/live-common; yarn",
     "start": "bash ./scripts/start.sh",
     "release": "bash ./scripts/release.sh",
     "dist": "bash ./scripts/dist.sh",
@@ -170,7 +170,7 @@
     "chance": "^1.0.13",
     "concurrently": "3.5.1",
     "dotenv": "^5.0.1",
-    "electron": "^2.0.17",
+    "electron": "1",
     "electron-builder": "~20.34",
     "electron-devtools-installer": "^2.2.3",
     "electron-rebuild": "^1.7.3",
