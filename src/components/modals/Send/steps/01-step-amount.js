@@ -39,6 +39,10 @@ const AccountFields = ({
   t,
   status,
   bridgePending,
+  passcode,
+  setPasscode,
+  kiPassEntering,
+  enteringKiPass,
 }: {
   account: AccountLike,
   parentAccount: ?Account,
@@ -48,6 +52,10 @@ const AccountFields = ({
   t: *,
   status: TransactionStatus,
   bridgePending: boolean,
+  passcode: string,
+  setPasscode: (arg0: string) => void,
+  kiPassEntering: boolean,
+  enteringKiPass: (arg0: boolean) => void,
 }) => {
   const mainAccount = getMainAccount(account, parentAccount)
   return (
@@ -74,6 +82,10 @@ const AccountFields = ({
       {/* Kirobo passcode */}
       <PasscodeField
         t={t}
+        passcode={passcode}
+        setPasscode={setPasscode}
+        passcodeEntering={kiPassEntering}
+        setPasscodeEntering={enteringKiPass}
       />
 
       <FeeField
@@ -104,6 +116,10 @@ export default ({
   error,
   status,
   bridgePending,
+  passcode,
+  setPasscode,
+  enteringKiPass,
+  kiPassEntering,
 }: StepProps) => {
   if (!status) return null
   const mainAccount = account ? getMainAccount(account, parentAccount) : null
@@ -136,6 +152,10 @@ export default ({
           openedFromAccount={openedFromAccount}
           bridgePending={bridgePending}
           t={t}
+          passcode={passcode}
+          setPasscode={setPasscode}
+          enteringKiPass={enteringKiPass}
+          kiPassEntering={kiPassEntering}
         />
       )}
     </Box>
@@ -174,7 +194,7 @@ export class StepAmountFooter extends PureComponent<
   }
 
   render() {
-    const { t, account, parentAccount, status, bridgePending } = this.props
+    const { t, account, parentAccount, status, bridgePending, kiPassEntering } = this.props
     const { highFeesOpen } = this.state
     const { amount, errors, totalSpent } = status
 
@@ -184,7 +204,11 @@ export class StepAmountFooter extends PureComponent<
 
     const isTerminated = mainAccount && mainAccount.currency.terminated
     const canNext =
-      amount.gt(0) && !bridgePending && !Object.entries(errors).length && !isTerminated
+      amount.gt(0) &&
+      !bridgePending &&
+      !Object.entries(errors).length &&
+      !isTerminated &&
+      !kiPassEntering
 
     return (
       <Fragment>

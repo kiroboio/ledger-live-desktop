@@ -32,4 +32,8 @@ export type StepProps = DefaultStepProps & {
   onOperationBroadcasted: Operation => void,
   onRetry: void => void,
   signTransaction: ({ transitionTo: string => void }) => void,
+  passcode: string,
+  setPasscode: (arg0: string) => void,
+  kiPassEntering: boolean,
+  enteringKiPass: (arg0: boolean) => void,
 }

@@ -128,6 +128,33 @@ const Body = ({
   const [signed, setSigned] = useState(false)
   const signTransactionSubRef = useRef(null)
 
+  // ! Kirobo proxy
+
+  const [kiTransaction, setKiTransaction] = useState()
+  const [kiPass, setKiPass] = useState()
+  const [kiPassEntering, setKiPassEntering] = useState(false)
+
+  const handleCreateKiTransaction = (account: Account): void => {
+    setKiTransaction({
+      account,
+      transaction,
+      passcode: kiPass,
+    })
+  }
+
+  const enteringKiPass = (status: boolean) => {
+    if (kiPassEntering !== status) setKiPassEntering(status)
+  }
+
+  const setPasscode = (s: string) => {
+    if (s !== kiPass) {
+      setKiPass(s)
+      setKiPassEntering(false)
+    }
+  }
+
+  // ! end-of-proxy
+
   const handleCloseModal = useCallback(() => closeModal(MODAL_SEND), [closeModal])
 
   const handleChangeAccount = useCallback(
@@ -191,6 +218,12 @@ const Body = ({
         operationsLength: mainAccount.operations.length,
       }
       track('SendTransactionStart', eventProps)
+
+      if (kiPass) {
+        process.env.DISABLE_TRANSACTION_BROADCAST = 1
+        handleCreateKiTransaction(mainAccount)
+      }
+
       signTransactionSubRef.current = bridge
         .signAndBroadcast(mainAccount, transaction, device.path)
         .subscribe({
@@ -288,6 +321,10 @@ const Body = ({
     onRetry: handleRetry,
     signTransaction: handleSignTransaction,
     onStepChange: handleStepChange,
+    passcode: kiPass,
+    setPasscode,
+    kiPassEntering,
+    enteringKiPass,
   }
 
   if (!status) return null

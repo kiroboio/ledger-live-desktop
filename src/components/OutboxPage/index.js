@@ -5,7 +5,7 @@ import TrackPage from 'analytics/TrackPage'
 import Box from 'components/base/Box'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import type { AccountLike, Operation } from '@ledgerhq/live-common/lib/types'
+import type { AccountLike } from '@ledgerhq/live-common/lib/types'
 
 import { accountsSelector } from 'reducers/accounts'
 import { openModal } from 'reducers/modals'
@@ -16,7 +16,6 @@ import MigrationBanner from '../modals/MigrateAccounts/Banner'
 
 import OutboxHeader from './OutboxHeader'
 import Transactions from './Transactions'
-import { mockOutbox } from './mock_data'
 
 type OutboxPageProps = {
   outbox: [],
@@ -49,8 +48,7 @@ const AccountsPage = ({ outbox, accounts, openModal }: OutboxPageProps) => {
 
 // TODO: Remove below mock data
 const outboxMock = () => {
-  const data: Operation[] = mockOutbox
-  return data
+  return []
 }
 
 const mapStateToProps = createStructuredSelector({

@@ -16,6 +16,10 @@ import { urls } from 'config/urls'
 
 type Props = {
   t: *,
+  passcode: string,
+  setPasscode: (arg0: string) => void,
+  passcodeEntering: boolean,
+  setPasscodeEntering: (arg0: boolean) => void,
 }
 
 const SendMaxSeparator = styled.div`
@@ -25,13 +29,25 @@ const SendMaxSeparator = styled.div`
   background: ${p => p.theme.colors.fog};
 `
 
-const PasscodeField = ({ t }: Props) => {
+const PasscodeField = ({
+  t,
+  passcode,
+  setPasscode,
+  passcodeEntering,
+  setPasscodeEntering,
+}: Props) => {
   const [showPasscode, setShowPasscode] = useState(false)
-  const [passcode, setPasscode] = useState('')
+  const [pass, setPass] = useState('')
   const [repeatPasscode, setRepeatPasscode] = useState('')
   const [warning, setWarning] = useState('')
   const [error, setError] = useState('')
   const [enableRight, setEnableRight] = useState(false)
+
+  const sendPasscode = (s: string) => {
+    if ((!!pass && !!s && pass === s && pass !== passcode) || !s) {
+      setPasscode(s)
+    }
+  }
 
   const toggleShowPasscode = () => setShowPasscode(!showPasscode)
 
@@ -44,6 +60,7 @@ const PasscodeField = ({ t }: Props) => {
   const handleCheckPasscode = (s: string) => {
     // since this method runs only when working with passcode, we don't need repeat passcode at all to avoid mess
     if (repeatPasscode) setRepeatPasscode('')
+    if (passcode) setPasscode('')
     if (enableRight) setEnableRight(false)
     // spaces in passcode are not allowed
     const matchSpaces = s.match(/\s/g)
@@ -56,35 +73,48 @@ const PasscodeField = ({ t }: Props) => {
       const length = s.length >= 6
       const matchNumbers = s.match(/\d/g)
       const matchSymbols = s.match(/\W/g)
+
       // set/clear warnings
       const warnings = []
       if (!length) warnings.push(t('send.steps.amount.passcode.check.short'))
-      if (!matchNumbers && !matchSymbols)
+      if (
+        (!matchNumbers && !matchSymbols) ||
+        (matchNumbers && s.length === matchNumbers.length) ||
+        (matchSymbols && s.length === matchSymbols.length)
+      )
         warnings.push(t('send.steps.amount.passcode.check.simple'))
+
       setWarning(warnings.join(' '))
       // if passcode is OK, allow to enter the repeat
-      if (length && (matchNumbers || matchSymbols)) setEnableRight(true)
+      if (length && !warnings.length) setEnableRight(true)
     }
   }
 
   const setErrorMessages = (match?: boolean) => {
+    if (passcode) setPasscode('')
+
     if (match) setError(t('send.steps.amount.passcode.check.match'))
     else setError(t('send.steps.amount.passcode.check.empty'))
   }
 
   const handleCheckRepeatPasscode = (s: string) => {
     if (!s) setErrorMessages()
-    else if (passcode !== s) setErrorMessages(true)
-    else clearErrorsWarnings()
+    else if (pass !== s) setErrorMessages(true)
+    else {
+      clearErrorsWarnings()
+      sendPasscode(s)
+    }
   }
 
   const handleOnChangeLeft = (s: string) => {
-    setPasscode(s)
+    setPass(s)
     if (!s) {
       if (enableRight) setEnableRight(false)
       if (repeatPasscode) setRepeatPasscode('')
       if (error || warning) clearErrorsWarnings()
+      sendPasscode(s)
     } else {
+      if (!passcodeEntering) setPasscodeEntering(true)
       handleCheckPasscode(s)
     }
   }
@@ -96,7 +126,7 @@ const PasscodeField = ({ t }: Props) => {
 
   const handleOnBlur = () => {
     if (enableRight && !repeatPasscode) setErrorMessages()
-    else if (enableRight && passcode !== repeatPasscode) setErrorMessages(true)
+    else if (enableRight && pass !== repeatPasscode) setErrorMessages(true)
   }
 
   const handlePasscodeHelp = useCallback(() => {
@@ -131,7 +161,7 @@ const PasscodeField = ({ t }: Props) => {
             style={{ paddingRight: 8 }}
             onClick={() => toggleShowPasscode()}
           >
-            <Trans i18nKey="send.steps.amount.passcode.show" />
+            <Trans i18nKey="send.steps.amount.passcode" />
           </Label>
           <Switch small isChecked={showPasscode} onChange={toggleShowPasscode} />
         </Box>
@@ -144,7 +174,7 @@ const PasscodeField = ({ t }: Props) => {
         onChangeLeft={handleOnChangeLeft}
         onChangeRight={handleOnChangeRight}
         placeholders={placeholders}
-        passcode={passcode}
+        passcode={pass}
         repeatPasscode={repeatPasscode}
         onClickLogo={handleKiroboHomepage}
         enableRight={enableRight}
