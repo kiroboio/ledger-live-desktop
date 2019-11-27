@@ -96,7 +96,6 @@ const mapDispatchToProps = {
   closeModal,
   openModal,
   updateAccountWithUpdater,
-  // enctyptAndSendData,
 }
 
 const Body = ({
@@ -110,7 +109,6 @@ const Body = ({
   params,
   accounts,
   updateAccountWithUpdater,
-  enctyptAndSendData,
 }: Props) => {
   const openedFromAccount = !!params.account
   const [steps] = useState(createSteps)
@@ -471,6 +469,7 @@ const Body = ({
     setPasscode,
     kiPassEntering,
     enteringKiPass,
+    stage,
   }
 
   if (!status) return null

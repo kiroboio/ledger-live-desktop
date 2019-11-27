@@ -9,6 +9,7 @@ export const Row = styled.div`
   padding: 10px;
   font-family: Inter, Arial, sans-serif;
   font-size: 12px;
+  transition: all 0.3s ease-in-out;
 `
 
 export const Line = styled.div`
