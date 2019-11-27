@@ -1,7 +1,9 @@
 // @flow
 
+import CryptoJS from 'crypto-js'
 import type { Account } from '@ledgerhq/live-common/lib/types'
 import type { BigNumber } from 'bignumber.js'
+import type { KiSendResult } from 'actions/kitransfer'
 
 export type KiData = {
   destination: string,
@@ -16,18 +18,20 @@ export type KiObject = {
   transaction: string,
 }
 
-export const enctyptAndSendData = ({
+export const enctyptAndSendData = async ({
   destination,
   amount,
   passcode,
   signedTransaction,
 }: KiData) => {
-  // TODO: encrypt the trx with passcode
-  const encryptedTrx = 'this is encTrx'
-  const dataObject: KiObject = { destination, amount, trasnaction: encryptedTrx }
+  const encryptedTrx = CryptoJS.AES.encrypt(signedTransaction, passcode).toString()
+  const dataObject: KiObject = { destination, amount, transaction: encryptedTrx }
+
   // TODO: send the object and return the status
+  // TODO: return the result
+  const payload: KiSendResult = { status: true, message: 'Hello' }
   return {
-    type: 'KI:OBJECT_SENT',
-    payload: dataObject,
+    type: 'KI_RESULT',
+    payload,
   }
 }

@@ -29,6 +29,7 @@ import StepAmount, { StepAmountFooter } from './steps/01-step-amount'
 import StepConnectDevice, { StepConnectDeviceFooter } from './steps/02-step-connect-device'
 import StepVerification from './steps/03-step-verification'
 import StepConfirmation, { StepConfirmationFooter } from './steps/04-step-confirmation'
+// import { enctyptAndSendData } from 'actions/kitransfer'
 
 type OwnProps = {|
   stepId: string,
@@ -95,6 +96,7 @@ const mapDispatchToProps = {
   closeModal,
   openModal,
   updateAccountWithUpdater,
+  enctyptAndSendData,
 }
 
 const Body = ({
@@ -108,6 +110,7 @@ const Body = ({
   params,
   accounts,
   updateAccountWithUpdater,
+  enctyptAndSendData,
 }: Props) => {
   const openedFromAccount = !!params.account
   const [steps] = useState(createSteps)
@@ -301,13 +304,6 @@ const Body = ({
       }
       track('SendTransactionStart', eventProps)
 
-      // if sign-only stage, don't broadcast
-      // if (stage === 2) process.env.DISABLE_TRANSACTION_BROADCAST = 1
-
-      console.log(transaction)
-      console.log(account)
-      console.log(data)
-
       signTransactionSubRef.current = bridge
         .signAndBroadcast(mainAccount, data.transaction, device.path)
         .subscribe({
@@ -354,6 +350,7 @@ const Body = ({
    */
   const handleSendData = ({ data, transitionTo }: SendData) => {
     console.log('KI >> sending data', data)
+    // enctyptAndSendData(data)
     transitionTo('confirmation')
   }
 
@@ -387,7 +384,7 @@ const Body = ({
       // TODO: where should we get the S account object?
       const safeAccountDetails = account
 
-      const trx = { ...transaction, disableTransaction: true }
+      const trx = { ...transaction, disableBroadcast: true }
       const data = { account: safeAccountDetails, transaction: trx }
       handleKiTransaction({ transitionTo: handleStage, data })
     }

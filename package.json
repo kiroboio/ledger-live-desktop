@@ -26,7 +26,9 @@
     "ci": "yarn check --integrity && ./scripts/check-no-dups.sh && yarn lint && yarn prettier -l && yarn test",
     "storybook": "NODE_ENV=development STORYBOOK_ENV=1 start-storybook -s ./static -p 4444",
     "publish-storybook": "bash ./scripts/legacy/publish-storybook.sh",
-    "reset-files": "bash ./scripts/legacy/reset-files.sh"
+    "reset-files": "bash ./scripts/legacy/reset-files.sh",
+    "refresh": "rm -rf node_modules && yarn cache clean && yarn",
+    "start:nvm": "nvm use lts/carbon && yarn start"
   },
   "electronWebpack": {
     "title": true,
