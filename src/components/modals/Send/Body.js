@@ -96,7 +96,7 @@ const mapDispatchToProps = {
   closeModal,
   openModal,
   updateAccountWithUpdater,
-  enctyptAndSendData,
+  // enctyptAndSendData,
 }
 
 const Body = ({
