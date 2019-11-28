@@ -48,7 +48,7 @@
     "@ledgerhq/hw-transport-http": "4",
     "@ledgerhq/hw-transport-node-hid": "4",
     "@ledgerhq/hw-transport-node-hid-singleton": "4",
-    "@ledgerhq/ledger-core": "git+https://github.com/kiroboio/ki-lib-ledger-core-node-bindings#safe-transfer-dev",
+    "@ledgerhq/ledger-core": "git+https://github.com/kiroboio/ki-lib-ledger-core-node-bindings.git#safe-transfer-dev",
     "@ledgerhq/live-common": "git+https://github.com/kiroboio/ki-ledger-live-common.git#safe-transfer-dev",
     "@ledgerhq/logs": "4",
     "@tippy.js/react": "^3.1.0",
