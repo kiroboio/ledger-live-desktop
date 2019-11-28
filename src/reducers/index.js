@@ -15,6 +15,7 @@ import modals from './modals'
 import settings from './settings'
 import onboarding from './onboarding'
 import bridgeSync from './bridgeSync'
+import kiTransfer from './kitransfer.js'
 
 import type { AccountsState } from './accounts'
 import type { ApplicationState } from './application'
@@ -24,6 +25,7 @@ import type { SettingsState } from './settings'
 import type { OnboardingState } from './onboarding'
 import type { BridgeSyncState } from './bridgeSync'
 import type { CurrenciesStatusState } from './currenciesStatus'
+import type { KiState } from './kitransfer.js'
 
 export type State = {
   accounts: AccountsState,
@@ -36,6 +38,7 @@ export type State = {
   settings: SettingsState,
   onboarding: OnboardingState,
   bridgeSync: BridgeSyncState,
+  kiTransfer: KiState,
 }
 
 // $FlowFixMe
@@ -50,4 +53,5 @@ export default combineReducers({
   settings,
   onboarding,
   bridgeSync,
+  kiTransfer,
 })

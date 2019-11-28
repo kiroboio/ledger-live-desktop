@@ -5,6 +5,7 @@ const Column = styled.div`
   padding: 0 10px;
   flex-direction: column;
   flex-shrink: 1;
+  transition: all 0.3s ease-in-out;
 `
 
 export const Title = styled.div`

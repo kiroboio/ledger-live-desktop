@@ -1,34 +1,39 @@
 // @flow
 
-import React, { useEffect, useState, useRef, useCallback } from 'react'
-import invariant from 'invariant'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { Trans, translate } from 'react-i18next'
 import { createStructuredSelector } from 'reselect'
-import type { Account, AccountLike, Operation } from '@ledgerhq/live-common/lib/types'
-import { getMainAccount, addPendingOperation } from '@ledgerhq/live-common/lib/account'
-import useBridgeTransaction from '@ledgerhq/live-common/lib/bridge/useBridgeTransaction'
-import Track from 'analytics/Track'
-import { updateAccountWithUpdater } from 'actions/accounts'
-import { MODAL_SEND } from 'config/constants'
-import logger from 'logger'
+import { DisconnectedDevice, UserRefusedOnDevice } from '@ledgerhq/errors'
 import { getAccountBridge } from '@ledgerhq/live-common/lib/bridge'
-import type { T, Device } from 'types/common'
+import { getMainAccount, addPendingOperation } from '@ledgerhq/live-common/lib/account'
+import { Trans, translate } from 'react-i18next'
+import invariant from 'invariant'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
+import type { Account, AccountLike, Operation } from '@ledgerhq/live-common/lib/types'
+import useBridgeTransaction from '@ledgerhq/live-common/lib/bridge/useBridgeTransaction'
+
+import { MODAL_SEND } from 'config/constants'
 import { track } from 'analytics/segment'
+import { updateAccountWithUpdater } from 'actions/accounts'
+import logger from 'logger'
+import Track from 'analytics/Track'
+import type { T, Device } from 'types/common'
 
 import { getCurrentDevice } from 'reducers/devices'
 import { accountsSelector } from 'reducers/accounts'
 import { closeModal, openModal } from 'reducers/modals'
-import { DisconnectedDevice, UserRefusedOnDevice } from '@ledgerhq/errors'
 
 import Stepper from 'components/base/Stepper'
 import SyncSkipUnderPriority from 'components/SyncSkipUnderPriority'
 
 import StepAmount, { StepAmountFooter } from './steps/01-step-amount'
+import StepConfirmation, { StepConfirmationFooter } from './steps/04-step-confirmation'
 import StepConnectDevice, { StepConnectDeviceFooter } from './steps/02-step-connect-device'
 import StepVerification from './steps/03-step-verification'
-import StepConfirmation, { StepConfirmationFooter } from './steps/04-step-confirmation'
+
+import Kirobo from 'bridge/kirobo'
+
+// import { enctyptAndSendData } from 'actions/kitransfer'
 
 type OwnProps = {|
   stepId: string,
@@ -126,34 +131,12 @@ const Body = ({
   const [optimisticOperation, setOptimisticOperation] = useState(null)
   const [transactionError, setTransactionError] = useState(null)
   const [signed, setSigned] = useState(false)
-  const signTransactionSubRef = useRef(null)
-
-  // ! Kirobo proxy
-
-  const [kiTransaction, setKiTransaction] = useState()
   const [kiPass, setKiPass] = useState()
   const [kiPassEntering, setKiPassEntering] = useState(false)
-
-  const handleCreateKiTransaction = (account: Account): void => {
-    setKiTransaction({
-      account,
-      transaction,
-      passcode: kiPass,
-    })
-  }
-
-  const enteringKiPass = (status: boolean) => {
-    if (kiPassEntering !== status) setKiPassEntering(status)
-  }
-
-  const setPasscode = (s: string) => {
-    if (s !== kiPass) {
-      setKiPass(s)
-      setKiPassEntering(false)
-    }
-  }
-
-  // ! end-of-proxy
+  const [stage, setStage] = useState(0)
+  const [transitionTo, setTransitionTo] = useState()
+  const [signedTransaction, setSignedTransaction] = useState()
+  const signTransactionSubRef = useRef(null)
 
   const handleCloseModal = useCallback(() => closeModal(MODAL_SEND), [closeModal])
 
@@ -198,6 +181,35 @@ const Body = ({
     [account, parentAccount, updateAccountWithUpdater],
   )
 
+  // Kirobo passcode
+  const enteringKiPass = (status: boolean) => {
+    if (kiPassEntering !== status) setKiPassEntering(status)
+  }
+
+  const setPasscode = (s: string) => {
+    if (s !== kiPass) {
+      setKiPass(s)
+      setKiPassEntering(false)
+    }
+  }
+
+  // Kirobo: if pass is entered, perform stages
+  // stage 1: change recipient and perform 2S transaction
+  // stage 2: prepare 2D transaction from Safe to Destination, and perform
+  // *: there will be a second request to sign
+  // stage 3: prepare the object and send to API
+
+  const handleStage = (data?: any) => {
+    if (stage === 1) {
+      setStage(2)
+    } else if (stage === 2) {
+      // TODO: How data is returning back
+      setSignedTransaction(data)
+      setStage(3)
+    }
+  }
+
+  // original
   const handleSignTransaction = useCallback(
     async ({ transitionTo }: { transitionTo: string => void }) => {
       if (!account) return
@@ -218,11 +230,6 @@ const Body = ({
         operationsLength: mainAccount.operations.length,
       }
       track('SendTransactionStart', eventProps)
-
-      if (kiPass) {
-        process.env.DISABLE_TRANSACTION_BROADCAST = 1
-        handleCreateKiTransaction(mainAccount)
-      }
 
       signTransactionSubRef.current = bridge
         .signAndBroadcast(mainAccount, transaction, device.path)
@@ -265,6 +272,148 @@ const Body = ({
       handleTransactionError,
     ],
   )
+
+  type TransactionProps = {
+    transitionTo: (*) => void,
+  }
+
+  /**
+   * Function to handle signing and broadcasting for kiTransaction elements
+   * @param { transitionTo } - Function to close the modal
+   * @param {Object} data - Data to use for current operation
+   * @param {Account} data.account - Account to be sent from
+   * @param {Object} data.transaction - Transaction to be used
+   *
+   * */
+  const handleKiTransaction = useCallback(
+    async ({ transitionTo, data }: TransactionProps) => {
+      if (!account) return
+      const mainAccount = getMainAccount(data.account, parentAccount)
+      const bridge = getAccountBridge(data.account, parentAccount)
+      if (!device) {
+        handleTransactionError(new DisconnectedDevice())
+        transitionTo('confirmation')
+        return
+      }
+
+      invariant(data.account && data.transaction && bridge, 'signTransaction invalid conditions')
+
+      const eventProps = {
+        currencyName: mainAccount.currency.name,
+        derivationMode: mainAccount.derivationMode,
+        freshAddressPath: mainAccount.freshAddressPath,
+        operationsLength: mainAccount.operations.length,
+      }
+      track('SendTransactionStart', eventProps)
+
+      signTransactionSubRef.current = bridge
+        .signAndBroadcast(mainAccount, data.transaction, device.path)
+        .subscribe({
+          next: e => {
+            switch (e.type) {
+              case 'signed': {
+                track('SendTransactionSigned', eventProps)
+                setSigned(true)
+                // if stage 2, then the signed transaction is the one to be sent to API
+                stage === 2 ? transitionTo(e.signedTransaction) : transitionTo('confirmation')
+                break
+              }
+              case 'broadcasted': {
+                track('SendTransactionBroadcasted', eventProps)
+                handleOperationBroadcasted(e.operation)
+                break
+              }
+              default:
+            }
+          },
+          error: err => {
+            const error = err.statusCode === 0x6985 ? new UserRefusedOnDevice() : err
+            track(
+              error instanceof UserRefusedOnDevice
+                ? 'SendTransactionRefused'
+                : 'SendTransactionError',
+              eventProps,
+            )
+            handleTransactionError(error)
+            // If error, cancelling the progress
+            setStage(3)
+            transitionTo('confirmation')
+          },
+        })
+    },
+    [account, device, handleOperationBroadcasted, handleTransactionError, parentAccount, stage],
+  )
+
+  /**
+   * Function to handle the send of data to Kirobo API
+   * @param {transitionTo} - Function to close the modal
+   * @param {Object} data - Data for the API
+   * @param {string} data.id - ID of the kiTransaction
+   * @param {string} data.transaction - Signed transaction for broadcasting
+   * @param {string} data.passcode - Passcode to release the transaction for broadcasting
+   */
+  const handleSendData = ({ data, transitionTo }: SendData) => {
+    Kirobo.sendTransaction(data)
+    transitionTo('confirmation')
+  }
+
+  /**
+   * Function to handle the switch between regular transaction and kiTransaction
+   * @callback transitionTo - Function to call next step
+   */
+  const handleTransactionChoice = useCallback(
+    async ({ transitionTo }: { transitionTo: string => void }) => {
+      // If kiPass is set, store 'transitionTo' and set the stage to 1 to launch the kiTrx
+      if (kiPass) {
+        await setTransitionTo({ transitionTo })
+        setStage(1)
+      } else handleSignTransaction({ transitionTo })
+    },
+    [kiPass, handleSignTransaction],
+  )
+
+  // Switching the stages
+  useEffect(() => {
+    const stageOne = async () => {
+      // TODO: where should we get the S account?
+      const safeAccount = transaction.recipient
+
+      const trx = { ...transaction, recipient: safeAccount }
+      const data = { account, transaction: trx }
+      handleKiTransaction({ transitionTo: handleStage, data })
+    }
+
+    const stageTwo = async () => {
+      // TODO: where should we get the S account object?
+      const safeAccountDetails = account
+
+      const trx = { ...transaction, disableBroadcast: true }
+      const data = { account: safeAccountDetails, transaction: trx }
+      handleKiTransaction({ transitionTo: handleStage, data })
+    }
+
+    const stageThree = () => {
+      // TODO: what should go as ID for the transaction?
+      const data = {
+        destination: transaction.recipient,
+        amount: transaction.amount,
+        passcode: kiPass,
+        signedTransaction,
+      }
+
+      handleSendData({ data, ...transitionTo })
+      setStage(0)
+    }
+
+    if (stage === 1) {
+      // change recipient
+      stageOne()
+    } else if (stage === 2) {
+      stageTwo()
+    } else if (stage === 3) {
+      stageThree()
+    }
+  }, [stage])
 
   const handleStepChange = useCallback(e => onChangeStepId(e.id), [onChangeStepId])
 
@@ -319,12 +468,13 @@ const Body = ({
     onChangeAppOpened: setAppOpened,
     onChangeTransaction: setTransaction,
     onRetry: handleRetry,
-    signTransaction: handleSignTransaction,
+    signTransaction: handleTransactionChoice,
     onStepChange: handleStepChange,
     passcode: kiPass,
     setPasscode,
     kiPassEntering,
     enteringKiPass,
+    stage,
   }
 
   if (!status) return null
