@@ -550,7 +550,11 @@
       "verification": {
         "title": "Verification",
         "warning": "Please verify all transaction details on your device",
-        "body": "Confirm the transaction on your device to send it"
+        "body": "Confirm the transaction on your device to send it",
+        "accountTitle": {
+        "deposit"    : "Deposit Account #",
+        "destination": "Destination Account #"
+        }
       },
       "confirmation": {
         "title": "Confirmation",

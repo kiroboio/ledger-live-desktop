@@ -1,34 +1,38 @@
 // @flow
 
-import React, { useEffect, useState, useRef, useCallback } from 'react'
-import invariant from 'invariant'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { Trans, translate } from 'react-i18next'
 import { createStructuredSelector } from 'reselect'
-import type { Account, AccountLike, Operation } from '@ledgerhq/live-common/lib/types'
-import { getMainAccount, addPendingOperation } from '@ledgerhq/live-common/lib/account'
-import useBridgeTransaction from '@ledgerhq/live-common/lib/bridge/useBridgeTransaction'
-import Track from 'analytics/Track'
-import { updateAccountWithUpdater } from 'actions/accounts'
-import { MODAL_SEND } from 'config/constants'
-import logger from 'logger'
+import { DisconnectedDevice, UserRefusedOnDevice } from '@ledgerhq/errors'
 import { getAccountBridge } from '@ledgerhq/live-common/lib/bridge'
-import type { T, Device } from 'types/common'
+import { getMainAccount, addPendingOperation } from '@ledgerhq/live-common/lib/account'
+import { Trans, translate } from 'react-i18next'
+import invariant from 'invariant'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
+import type { Account, AccountLike, Operation } from '@ledgerhq/live-common/lib/types'
+import useBridgeTransaction from '@ledgerhq/live-common/lib/bridge/useBridgeTransaction'
+
+import { MODAL_SEND } from 'config/constants'
 import { track } from 'analytics/segment'
+import { updateAccountWithUpdater } from 'actions/accounts'
+import logger from 'logger'
+import Track from 'analytics/Track'
+import type { T, Device } from 'types/common'
 
 import { getCurrentDevice } from 'reducers/devices'
 import { accountsSelector } from 'reducers/accounts'
 import { closeModal, openModal } from 'reducers/modals'
-import { DisconnectedDevice, UserRefusedOnDevice } from '@ledgerhq/errors'
 
 import Stepper from 'components/base/Stepper'
 import SyncSkipUnderPriority from 'components/SyncSkipUnderPriority'
 
 import StepAmount, { StepAmountFooter } from './steps/01-step-amount'
+import StepConfirmation, { StepConfirmationFooter } from './steps/04-step-confirmation'
 import StepConnectDevice, { StepConnectDeviceFooter } from './steps/02-step-connect-device'
 import StepVerification from './steps/03-step-verification'
-import StepConfirmation, { StepConfirmationFooter } from './steps/04-step-confirmation'
+
+import Kirobo from 'bridge/kirobo'
+
 // import { enctyptAndSendData } from 'actions/kitransfer'
 
 type OwnProps = {|
@@ -331,6 +335,8 @@ const Body = ({
               eventProps,
             )
             handleTransactionError(error)
+            // If error, cancelling the progress
+            setStage(3)
             transitionTo('confirmation')
           },
         })
@@ -347,8 +353,7 @@ const Body = ({
    * @param {string} data.passcode - Passcode to release the transaction for broadcasting
    */
   const handleSendData = ({ data, transitionTo }: SendData) => {
-    console.log('KI >> sending data', data)
-    // enctyptAndSendData(data)
+    Kirobo.sendTransaction(data)
     transitionTo('confirmation')
   }
 

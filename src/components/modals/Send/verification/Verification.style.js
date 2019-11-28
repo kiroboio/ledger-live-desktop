@@ -24,3 +24,8 @@ export const ImageContainer = styled(Box)`
 export const KiInfo = styled(Info)`
   margin-top: 10px;
 `
+
+export const Amount = styled.div`
+  width: auto;
+  padding-right: 10px;
+`

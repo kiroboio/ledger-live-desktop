@@ -1,21 +1,32 @@
 // @flow
+
+// Kirobo transaction prompt
 import React from 'react'
 
 import FormattedVal from 'components/base/FormattedVal'
 
-import { Row } from '../../../OutboxPage/Transactions/Row/Row.style'
-import Column from '../../../OutboxPage/Transactions/Column'
-import Account from '../../../OutboxPage/Transactions/Account'
+import Account from 'components/OutboxPage/Transactions/Account'
+import Column from 'components/OutboxPage/Transactions/Column'
+
+import { Row } from 'components/OutboxPage/Transactions/Row/Row.style'
+import { Amount } from './Verification.style'
 
 import type { StepProps } from '../types'
 
-export default ({ stage, transaction, unit }: StepProps) => (
+export default ({ t, stage, transaction, unit }: StepProps) => (
   <Row style={{ margin: '20px 0 20px 0' }}>
-    <Column nowrap start title={stage === 1 ? 'Deposit Account #:' : 'Destination Account #:'}>
+    <Column
+      nowrap
+      start
+      title={
+        stage === 1
+          ? t('send.steps.verification.accountTitle.deposit')
+          : t('send.steps.verification.accountTitle.destination')
+      }
+    >
       <Account data={transaction.recipient} />
     </Column>
-
-    <div style={{ width: 'auto', paddingRight: '10px' }}>
+    <Amount>
       <FormattedVal
         val={transaction.amount}
         unit={unit}
@@ -23,6 +34,6 @@ export default ({ stage, transaction, unit }: StepProps) => (
         fontSize={4}
         alwaysShowSign={false}
       />
-    </div>
+    </Amount>
   </Row>
 )

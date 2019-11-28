@@ -1,16 +1,18 @@
 // @flow
 
+// Kirobo verification prompt
 import React from 'react'
 
 import { multiline } from 'styles/helpers'
-import TrackPage from 'analytics/TrackPage'
-import { urls } from 'config/urls'
 import { openURL } from 'helpers/linking'
-import LinkWithExternalIcon from 'components/base/LinkWithExternalIcon'
-import WarnBox from 'components/WarnBox'
+import { urls } from 'config/urls'
 import Interactions from 'icons/device/interactions'
+import LinkWithExternalIcon from 'components/base/LinkWithExternalIcon'
+import TrackPage from 'analytics/TrackPage'
+import WarnBox from 'components/WarnBox'
 
 import Transaction from './Transaction'
+
 import { Container, KiInfo, ImageContainer } from './Verification.style'
 
 import type { StepProps } from '../types'

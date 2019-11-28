@@ -2,6 +2,7 @@
 
 import React, { PureComponent } from 'react'
 import { getAccountUnit } from '@ledgerhq/live-common/lib/account'
+
 import Verification from '../verification/Verification'
 import KiVerification from '../verification/KiVerification'
 
@@ -22,11 +23,13 @@ export default class StepVerification extends PureComponent<StepProps> {
   render() {
     const { t, device, passcode, transaction, account, stage } = this.props
     const isBlue = device && device.modelId === 'blue'
-
-    const unit = getAccountUnit(account)
     const verificationProps = { t, device, isBlue }
-    const trx = { transaction, stage, unit }
+
+    // if passcode is used > use Kirobo updated component
+    const unit = getAccountUnit(account)
+    const trx = { t, transaction, stage, unit }
     const kiVerificationProps = { ...verificationProps, trx }
+
     return passcode ? (
       <KiVerification {...kiVerificationProps} />
     ) : (
