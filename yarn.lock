@@ -1906,17 +1906,16 @@
     "@ledgerhq/errors" "^4.73.4"
     events "^3.0.0"
 
-"@ledgerhq/ledger-core@^3.4.0":
+"@ledgerhq/ledger-core@git+https://github.com/kiroboio/ki-lib-ledger-core-node-bindings.git#safe-transfer-dev":
   version "3.9.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/ledger-core/-/ledger-core-3.9.0.tgz#ee9b09069e955c5ea63c91cc31b9f3d2581f1e6e"
-  integrity sha512-uEZO+RKll+JP1LRLbYQh00wSaCwtgizZ4BBjs7W9vXU4hXTN11LeloecOuIYcizi8Rk+95uBSEYUu28vAuwibQ==
+  resolved "git+https://github.com/kiroboio/ki-lib-ledger-core-node-bindings.git#e8b630e564e78266397f8da8d7d2e3decd0d86ad"
   dependencies:
     bindings "1.3.0"
     nan "^2.6.2"
 
-"@ledgerhq/live-common@git://github.com/kiroboio/ledger-live-common#safe-transfer-dev":
+"@ledgerhq/live-common@git+https://github.com/kiroboio/ki-ledger-live-common.git#safe-transfer-dev":
   version "8.8.0"
-  resolved "git://github.com/kiroboio/ledger-live-common#68954f90822084c2c85174089b64acce15eab6d6"
+  resolved "git+https://github.com/kiroboio/ki-ledger-live-common.git#ca3908777e95af1e899d7a8d8c64cdc171f5a4b7"
   dependencies:
     "@ledgerhq/compressjs" "1.3.2"
     "@ledgerhq/devices" "4"
